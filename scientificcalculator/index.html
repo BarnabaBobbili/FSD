@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Scientific Calculator</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    background: linear-gradient(to right, #e0f7fa, #80deea);
+  }
+  .calculator {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px #888;
+    width: 350px;
+  }
+  input[type="text"] {
+    width: 100%;
+    font-size: 24px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    border: 1px solid #aaa;
+    text-align: right;
+  }
+  button {
+    width: 60px;
+    height: 50px;
+    margin: 5px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: none;
+    background-color: #26c6da;
+    color: white;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #00acc1;
+  }
+  .function-btn {
+    background-color: #ffb74d;
+    color: #000;
+  }
+  .function-btn:hover {
+    background-color: #ffa726;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+</style>
+</head>
+<body>
+
+<div class="calculator">
+  <input type="text" id="display" disabled>
+
+  <!-- Row 1 -->
+  <div class="row">
+    <button class="function-btn" onclick="clearDisplay()">C</button>
+    <button class="function-btn" onclick="backspace()">⌫</button>
+    <button class="function-btn" onclick="addToDisplay('(')">(</button>
+    <button class="function-btn" onclick="addToDisplay(')')">)</button>
+  </div>
+
+  <!-- Row 2 -->
+  <div class="row">
+    <button onclick="addToDisplay('7')">7</button>
+    <button onclick="addToDisplay('8')">8</button>
+    <button onclick="addToDisplay('9')">9</button>
+    <button onclick="addToDisplay('/')">/</button>
+  </div>
+
+  <!-- Row 3 -->
+  <div class="row">
+    <button onclick="addToDisplay('4')">4</button>
+    <button onclick="addToDisplay('5')">5</button>
+    <button onclick="addToDisplay('6')">6</button>
+    <button onclick="addToDisplay('*')">*</button>
+  </div>
+
+  <!-- Row 4 -->
+  <div class="row">
+    <button onclick="addToDisplay('1')">1</button>
+    <button onclick="addToDisplay('2')">2</button>
+    <button onclick="addToDisplay('3')">3</button>
+    <button onclick="addToDisplay('-')">-</button>
+  </div>
+
+  <!-- Row 5 -->
+  <div class="row">
+    <button onclick="addToDisplay('0')">0</button>
+    <button onclick="addToDisplay('.')">.</button>
+    <button onclick="calculateResult()">=</button>
+    <button onclick="addToDisplay('+')">+</button>
+  </div>
+
+  <!-- Scientific Functions -->
+  <div class="row">
+    <button class="function-btn" onclick="calculateFunc('sin')">sin</button>
+    <button class="function-btn" onclick="calculateFunc('cos')">cos</button>
+    <button class="function-btn" onclick="calculateFunc('tan')">tan</button>
+    <button class="function-btn" onclick="calculateFunc('log')">log</button>
+  </div>
+
+  <div class="row">
+    <button class="function-btn" onclick="calculateFunc('ln')">ln</button>
+    <button class="function-btn" onclick="calculateFunc('sqrt')">√</button>
+    <button class="function-btn" onclick="calculateFunc('square')">x²</button>
+    <button class="function-btn" onclick="addToDisplay('**')">x^y</button>
+  </div>
+</div>
+
+<script>
+const display = document.getElementById('display');
+
+function addToDisplay(value){
+  display.value += value;
+}
+
+function clearDisplay(){
+  display.value = '';
+}
+
+function backspace(){
+  display.value = display.value.slice(0, -1);
+}
+
+function calculateResult(){
+  try{
+    display.value = eval(display.value);
+  } catch(e){
+    alert('Invalid Expression');
+  }
+}
+
+function calculateFunc(func){
+  try{
+    let val = eval(display.value);
+    switch(func){
+      case 'sin': display.value = Math.sin(val); break;
+      case 'cos': display.value = Math.cos(val); break;
+      case 'tan': display.value = Math.tan(val); break;
+      case 'log': display.value = Math.log10(val); break;
+      case 'ln': display.value = Math.log(val); break;
+      case 'sqrt': display.value = Math.sqrt(val); break;
+      case 'square': display.value = val*val; break;
+    }
+  } catch(e){
+    alert('Invalid Input for ' + func);
+  }
+}
+</script>
+
+</body>
+</html>
