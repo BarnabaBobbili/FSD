@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Diet Checker Form</title>
+<style>
+  body { font-family: Arial, sans-serif; background: linear-gradient(to right, #f0f4c3, #c8e6c9); padding: 20px; }
+  h1 { text-align: center; color: #2e7d32; }
+  form { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 0 10px #888; }
+  fieldset { margin-bottom: 20px; border: 2px solid #2e7d32; border-radius: 10px; padding: 15px; }
+  legend { font-weight: bold; color: #1565c0; }
+  label { display: block; margin: 8px 0 4px; }
+  input[type="text"], input[type="number"], select, textarea { width: 99%; padding: 8px; margin-bottom: 10px; border-radius: 5px; border: 1px solid #aaa; }
+  textarea { resize: vertical; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+  table th, table td { border: 1px solid #ccc; padding: 8px; vertical-align: top; }
+  table th { background: #bbdefb; }
+  .checkbox-group { display: flex; flex-direction: column; align-items: flex-start; }
+  .submit-btn { text-align: center; }
+  button { background-color: #1565c0; color: white; padding: 12px 20px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; margin: 5px; }
+  button:hover { background-color: #0d47a1; }
+  .calories-output { font-weight: bold; margin-top: 5px; color: #d32f2f; }
+</style>
+</head>
+<body>
+
+<h1>Diet Checker Form</h1>
+
+<form id="dietForm">
+
+  <!-- Personal Info -->
+  <fieldset>
+    <legend>Personal Information</legend>
+    <label>Name:</label><input type="text" name="name">
+    <label>Age:</label><input type="number" name="age" min="1">
+    <label>Gender:</label>
+    <select name="gender">
+      <option value="">--Select--</option>
+      <option>Male</option>
+      <option>Female</option>
+      <option>Other</option>
+    </select>
+    <label>Weight (kg):</label><input type="number" name="weight" step="0.1">
+    <label>Height (cm):</label><input type="number" name="height" step="0.1">
+    <label>Phone Number:</label><input type="text" name="phoneno">
+    <label>Email Id:</label><input type="text" name="emailid">
+
+  </fieldset>
+
+  <!-- Lifestyle -->
+  <fieldset>
+    <legend>Lifestyle & Activity</legend>
+    <label>Activity Level:</label>
+    <select name="activity">
+      <option value="">--Select--</option>
+      <option>Sedentary</option>
+      <option>Lightly Active</option>
+      <option>Moderately Active</option>
+      <option>Very Active</option>
+      <option>Extra Active</option>
+    </select>
+    <label>Do you smoke?</label>
+    <input type="radio" name="smoke" value="yes"> Yes
+    <input type="radio" name="smoke" value="no"> No
+    <label>Do you consume alcohol?</label>
+    <input type="radio" name="alcohol" value="yes"> Yes
+    <input type="radio" name="alcohol" value="no"> No
+  </fieldset>
+
+  <!-- Preferences -->
+  <fieldset>
+    <legend>Dietary Preferences & Allergies</legend>
+    <label>Diet Type:</label>
+    <div class="checkbox-group">
+      <label><input type="radio" name="diet" value="Vegetarian"> Vegetarian</label>
+      <label><input type="radio" name="diet" value="Vegan"> Vegan</label>
+      <label><input type="radio" name="diet" value="Pescatarian"> Pescatarian</label>
+      <label><input type="radio" name="diet" value="Keto"> Keto</label>
+      <label><input type="radio" name="diet" value="Balanced"> Balanced</label>
+      <label><input type="radio" name="diet" value="Other"> Other:</label>
+      <input type="text" id="dietOther" name="diet_other" placeholder="Specify other diet">
+    </div>
+
+    <label>Allergies (check all that apply):</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="allergy" value="nuts"> Nuts</label>
+      <label><input type="checkbox" name="allergy" value="gluten"> Gluten</label>
+      <label><input type="checkbox" name="allergy" value="dairy"> Dairy</label>
+      <label><input type="checkbox" name="allergy" value="soy"> Soy</label>
+      <label><input type="checkbox" name="allergy" value="eggs"> Eggs</label>
+      <label><input type="checkbox" name="allergy" value="other"> Other:</label>
+      <input type="text" id="allergyOther" name="allergy_other" placeholder="Specify other allergies">
+    </div>
+  </fieldset>
+
+  <!-- Meals -->
+  <fieldset>
+    <legend>Meals</legend>
+    <table>
+      <tr>
+        <th>Meal</th><th>Food Options</th><th>Calories</th>
+      </tr>
+      <tr>
+        <td>Breakfast</td>
+        <td class="checkbox-group">
+          <label><input type="checkbox" class="food" data-meal="breakfast" data-cal="150"> Oats</label>
+          <label><input type="checkbox" class="food" data-meal="breakfast" data-cal="70"> Eggs</label>
+          <label><input type="checkbox" class="food" data-meal="breakfast" data-cal="120"> Milk</label>
+          <label><input type="checkbox" class="food" data-meal="breakfast" data-cal="90"> Banana</label>
+          <label><input type="checkbox" class="food" data-meal="breakfast" data-cal="80"> Bread</label>
+        </td>
+        <td>150 / 70 / 120 / 90 / 80</td>
+      </tr>
+      <tr>
+        <td>Lunch</td>
+        <td class="checkbox-group">
+          <label><input type="checkbox" class="food" data-meal="lunch" data-cal="200"> Rice</label>
+          <label><input type="checkbox" class="food" data-meal="lunch" data-cal="250"> Chicken</label>
+          <label><input type="checkbox" class="food" data-meal="lunch" data-cal="100"> Vegetables</label>
+          <label><input type="checkbox" class="food" data-meal="lunch" data-cal="180"> Dal</label>
+          <label><input type="checkbox" class="food" data-meal="lunch" data-cal="80"> Salad</label>
+        </td>
+        <td>200 / 250 / 100 / 180 / 80</td>
+      </tr>
+      <tr>
+        <td>Dinner</td>
+        <td class="checkbox-group">
+          <label><input type="checkbox" class="food" data-meal="dinner" data-cal="150"> Soup</label>
+          <label><input type="checkbox" class="food" data-meal="dinner" data-cal="220"> Fish</label>
+          <label><input type="checkbox" class="food" data-meal="dinner" data-cal="120"> Chapati</label>
+          <label><input type="checkbox" class="food" data-meal="dinner" data-cal="190"> Paneer</label>
+          <label><input type="checkbox" class="food" data-meal="dinner" data-cal="90"> Fruits</label>
+        </td>
+        <td>150 / 220 / 120 / 190 / 90</td>
+      </tr>
+      <tr>
+        <td>Snacks</td>
+        <td class="checkbox-group">
+          <label><input type="checkbox" class="food" data-meal="snacks" data-cal="60"> Fruit</label>
+          <label><input type="checkbox" class="food" data-meal="snacks" data-cal="180"> Nuts</label>
+          <label><input type="checkbox" class="food" data-meal="snacks" data-cal="90"> Biscuits</label>
+          <label><input type="checkbox" class="food" data-meal="snacks" data-cal="50"> Tea/Coffee</label>
+          <label><input type="checkbox" class="food" data-meal="snacks" data-cal="200"> Sandwich</label>
+        </td>
+        <td>60 / 180 / 90 / 50 / 200</td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <!-- Notes -->
+  <fieldset>
+    <legend>Additional Notes</legend>
+    <textarea name="notes" rows="4" placeholder="Write any special requirements..."></textarea>
+  </fieldset>
+
+  <!-- Calories -->
+  <div class="calories-output" id="breakfastCalories">Breakfast Total: 0 kcal</div>
+  <div class="calories-output" id="lunchCalories">Lunch Total: 0 kcal</div>
+  <div class="calories-output" id="dinnerCalories">Dinner Total: 0 kcal</div>
+  <div class="calories-output" id="snacksCalories">Snacks Total: 0 kcal</div>
+  <div class="calories-output" id="dailyCalories">Daily Total: 0 kcal</div>
+
+  <!-- Submit -->
+  <div class="submit-btn">
+    <button type="submit">Submit Diet Info</button>
+    <button type="reset">Reset</button>
+  </div>
+</form>
+
+<script>
+const foodCheckboxes = document.querySelectorAll('.food');
+const breakfastDiv = document.getElementById('breakfastCalories');
+const lunchDiv = document.getElementById('lunchCalories');
+const dinnerDiv = document.getElementById('dinnerCalories');
+const snacksDiv = document.getElementById('snacksCalories');
+const dailyDiv = document.getElementById('dailyCalories');
+
+function updateMealCalories() {
+  let breakfast = 0, lunch = 0, dinner = 0, snacks = 0;
+
+  foodCheckboxes.forEach(item => {
+    const cal = parseInt(item.dataset.cal);
+    const meal = item.dataset.meal;
+    if(item.checked){
+      if(meal==='breakfast') breakfast += cal;
+      else if(meal==='lunch') lunch += cal;
+      else if(meal==='dinner') dinner += cal;
+      else if(meal==='snacks') snacks += cal;
+    }
+  });
+
+  breakfastDiv.textContent = 'Breakfast Total: ' + breakfast + ' kcal';
+  lunchDiv.textContent = 'Lunch Total: ' + lunch + ' kcal';
+  dinnerDiv.textContent = 'Dinner Total: ' + dinner + ' kcal';
+  snacksDiv.textContent = 'Snacks Total: ' + snacks + ' kcal';
+  dailyDiv.textContent = 'Daily Total: ' + (breakfast+lunch+dinner+snacks) + ' kcal';
+}
+
+foodCheckboxes.forEach(item => {
+  item.addEventListener('change', updateMealCalories);
+});
+</script>
+
+</body>
+</html>
