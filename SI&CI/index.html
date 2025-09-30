@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple & Compound Interest Calculator</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#7dd3fc;--muted:#9aa7b2;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial}
+    body{margin:0;background:linear-gradient(180deg,#071029 0%, #071a2b 100%);color:#e6f2f8;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+    .wrap{width:100%;max-width:980px}
+    header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+    header h1{font-size:20px;margin:0}
+    .grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:18px;box-shadow:0 6px 20px rgba(2,6,23,0.6);}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    .row{display:flex;gap:12px}
+    input[type=number],select,input[type=text]{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
+    .controls{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:12px}
+    .btn{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;background:linear-gradient(90deg,var(--accent),#60a5fa);color:#042029;font-weight:600}
+    .muted{font-size:13px;color:var(--muted)}
+    .results{margin-top:12px;background:rgba(255,255,255,0.02);padding:12px;border-radius:8px}
+    .result-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.02)}
+    .result-line:last-child{border-bottom:none}
+    .small{font-size:13px;color:var(--muted)}
+    table{width:100%;border-collapse:collapse;margin-top:10px}
+    th,td{padding:8px;text-align:right;border-bottom:1px solid rgba(255,255,255,0.03);font-size:13px}
+    th{text-align:left;color:var(--muted)}
+    .footer{margin-top:10px;color:var(--muted);font-size:13px}
+    @media(max-width:880px){.grid{grid-template-columns:1fr}.card{padding:14px}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Money & Finance — Simple Interest (SI) & Compound Interest (CI)</h1>
+      <div class="muted">Quick calculators with yearly breakdown</div>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="controls">
+          <div>
+            <label for="principal">Principal (P)</label>
+            <input id="principal" type="number" min="0" step="0.01" value="10000">
+          </div>
+          <div>
+            <label for="rate">Rate (% per year)</label>
+            <input id="rate" type="number" min="0" step="0.01" value="5">
+          </div>
+          <div>
+            <label for="time">Time (years)</label>
+            <input id="time" type="number" min="0" step="0.1" value="3">
+          </div>
+          <div>
+            <label for="comp">Compounding</label>
+            <select id="comp">
+              <option value="1">Annually (1)</option>
+              <option value="2">Semi-Annually (2)</option>
+              <option value="4">Quarterly (4)</option>
+              <option value="12">Monthly (12)</option>
+              <option value="365">Daily (365)</option>
+              <option value="continuous">Continuous</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <button id="calcBtn" class="btn">Calculate</button>
+          <button id="resetBtn" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--accent)">Reset</button>
+        </div>
+
+        <div class="results" id="results" aria-live="polite">
+          <div class="result-line"><div><strong>Simple Interest (SI)</strong><div class="small">Interest over period</div></div><div id="siAmt">—</div></div>
+          <div class="result-line"><div><strong>Amount (P + SI)</strong></div><div id="siTotal">—</div></div>
+          <div class="result-line"><div><strong>Compound Interest (CI)</strong><div class="small">Total interest earned</div></div><div id="ciAmt">—</div></div>
+          <div class="result-line"><div><strong>Compound Amount</strong></div><div id="ciTotal">—</div></div>
+
+          <div id="extra" style="margin-top:10px"></div>
+        </div>
+
+        <div class="footer">Formulas: SI = P × R × T / 100. CI (discrete) = P × (1 + R/(100·n))^(nT) − P. Continuous: A = P·e^(R·T/100).</div>
+      </div>
+
+      <div class="card" id="rightCard">
+        <h3 style="margin-top:0">Breakdown & Tools</h3>
+        <div class="muted">Yearly balance for the compound interest</div>
+        <div id="tableWrap" style="margin-top:10px;max-height:360px;overflow:auto"></div>
+
+        <div style="margin-top:12px;display:flex;gap:8px">
+          <button id="copyBtn" class="btn">Copy Results</button>
+          <button id="downloadCsv" class="btn" style="background:linear-gradient(90deg,#fbcfe8,#fda4af)">Download CSV</button>
+        </div>
+
+        <div style="margin-top:12px" class="muted">Tip: change compounding frequency to compare outcomes.</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  function money(x){return (typeof x==='number')? x.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}): x}
+
+  function calculate(){
+    const P = parseFloat($('principal').value) || 0;
+    const R = parseFloat($('rate').value) || 0;
+    const T = parseFloat($('time').value) || 0;
+    const comp = $('comp').value;
+
+    // Simple Interest
+    const SI = P * R * T / 100;
+    const SI_total = P + SI;
+
+    // Compound Interest
+    let CI=0, A=0;
+    const r = R/100;
+
+    if(comp === 'continuous'){
+      A = P * Math.exp(r * T);
+      CI = A - P;
+    } else {
+      const n = Number(comp);
+      A = P * Math.pow(1 + r / n, n * T);
+      CI = A - P;
+    }
+
+    $('siAmt').textContent = money(SI);
+    $('siTotal').textContent = money(SI_total);
+    $('ciAmt').textContent = money(CI);
+    $('ciTotal').textContent = money(A);
+
+    // Create yearly breakdown for CI (discrete or continuous approximated per year)
+    const tableWrap = $('tableWrap');
+    tableWrap.innerHTML = '';
+    const tbl = document.createElement('table');
+    const thead = document.createElement('thead');
+    thead.innerHTML = '<tr><th>Year</th><th>Start Balance</th><th>Interest Earned</th><th>End Balance</th></tr>';
+    tbl.appendChild(thead);
+    const tbody = document.createElement('tbody');
+
+    let start = P;
+    const rows = Math.ceil(Math.max(1,T));
+    for(let y=1;y<=rows;y++){
+      const yearFraction = Math.min(1, Math.max(0, T - (y-1)));
+      let end;
+      if(comp === 'continuous'){
+        end = start * Math.exp(r * yearFraction);
+      } else {
+        const n = Number(comp);
+        // apply compound for yearFraction years => multiply by (1 + r/n)^(n*yearFraction)
+        end = start * Math.pow(1 + r / n, n * yearFraction);
+      }
+      const interest = end - start;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td style="text-align:left">${y}</td><td>${money(start)}</td><td>${money(interest)}</td><td>${money(end)}</td>`;
+      tbody.appendChild(tr);
+      start = end;
+    }
+    tbl.appendChild(tbody);
+    tableWrap.appendChild(tbl);
+
+    // store last result for copy/download
+    window.lastCalc = {P,R,T,comp,SI,SI_total,CI,A,breakdown:Array.from(tbody.querySelectorAll('tr')).map(tr=>{
+      const tds = tr.querySelectorAll('td');
+      return {year:tds[0].textContent, start:tds[1].textContent, interest:tds[2].textContent, end:tds[3].textContent}
+    })};
+  }
+
+  $('calcBtn').addEventListener('click', calculate);
+  $('resetBtn').addEventListener('click', ()=>{
+    $('principal').value='10000';$('rate').value='5';$('time').value='3';$('comp').value='1';
+    $('results').querySelectorAll('.result-line div:last-child').forEach(n=>n.textContent='—');
+    $('tableWrap').innerHTML='';
+    window.lastCalc = null;
+  });
+
+  $('copyBtn').addEventListener('click', ()=>{
+    if(!window.lastCalc){alert('Please calculate first.');return}
+    const r = window.lastCalc;
+    let txt = `Principal: ${r.P}\nRate: ${r.R}%\nTime: ${r.T} years\nCompounding: ${r.comp}\n---\nSI: ${money(r.SI)}\nSI Total: ${money(r.SI_total)}\nCI: ${money(r.CI)}\nCI Amount: ${money(r.A)}\n\nYearly breakdown:\n`;
+    r.breakdown.forEach(b=>{txt+= `${b.year}: start ${b.start}, interest ${b.interest}, end ${b.end}\n`});
+    navigator.clipboard?.writeText(txt).then(()=>{alert('Results copied to clipboard.');},()=>{prompt('Copy this text:',txt)});
+  });
+
+  $('downloadCsv').addEventListener('click', ()=>{
+    if(!window.lastCalc){alert('Calculate first.');return}
+    const r = window.lastCalc;
+    const rows = ['Year,Start Balance,Interest,End Balance', ...r.breakdown.map(b=>`${b.year},${b.start.replace(/,/g,'')},${b.interest.replace(/,/g,'')},${b.end.replace(/,/g,'')}`)];
+    const blob = new Blob([rows.join('\n')],{type:'text/csv'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');a.href=url;a.download='ci_breakdown.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+  });
+
+  // calculate on load with default values
+  calculate();
+</script>
+</body>
+</html>
