@@ -49,19 +49,22 @@ export default function App() {
     const details = [];
 
     for (const slab of slabs) {
-      const count = Math.max(0, Math.min(units, slab.max) - lastMax);
+      const appliedFrom = slab.min;                  // e.g., 0, 101, 201, ...
+      const appliedTo = Math.min(units, slab.max);   // cap by user's units
+      const count = Math.max(0, appliedTo - lastMax); // how many units fall in this slab
+
       if (count > 0) {
         const amount = count * slab.rate;
         energyCharge += amount;
-        const from = lastMax === 0 ? 0 : lastMax + 1;
-        const to = slab.max === Infinity ? "∞" : slab.max;
         details.push({
-          range: `Rs.{from}-Rs.{to}`,
+          from: appliedFrom,
+          to: appliedTo === Infinity ? Infinity : appliedTo,
           units: count,
           rate: slab.rate,
           amount
         });
       }
+
       lastMax = Math.min(slab.max, units);
       if (lastMax >= units) break;
     }
@@ -148,7 +151,7 @@ export default function App() {
           <ul className="list">
             {bill.details.map((d, i) => (
               <li key={i}>
-                {d.range}: {d.units} units × Rs.{d.rate} = Rs.{d.amount.toFixed(2)}
+                Units {d.from} to {d.to === Infinity ? "∞" : d.to}: {d.units} units at Rs.{d.rate}/unit = Rs.{d.amount.toFixed(2)}
               </li>
             ))}
           </ul>

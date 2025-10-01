@@ -91,7 +91,7 @@ export default function App() {
           <label htmlFor="name">Name</label>
           <input
             id="name"
-            placeholder="e.g. Ada Lovelace"
+            placeholder="e.g. Monkey D. Luffy"
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
@@ -102,7 +102,7 @@ export default function App() {
           <textarea
             id="address"
             rows={4}
-            placeholder={"e.g.\n221B Baker Street\nLondon NW1"}
+            placeholder={"e.g.\n56 Thousand Sunny\nGrand Line\nThe New World"}
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             style={{ width: "100%", resize: "vertical" }}

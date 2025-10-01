@@ -1,65 +1,58 @@
+/* css */
+html, body, #root { height: 100%; min-height: 100vh; }
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #2f2d30 0%, #c7c9cd 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: #fff;
+  color: #000;
+  display: grid;
+  place-items: center;   /* center horizontally and vertically */
+  padding: 16px;
 }
 
+/* enclosed box */
 .container {
-  background: white;
-  padding: 40px 30px;
-  border-radius: 15px;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-  text-align: center;
-  max-width: 400px;
+  width: min(400px, 100% - 32px);
+  padding: 20px;
+  border: 1px solid #000;
+  background: #fff;
+}
+
+/* make inputs fit inside the box */
+input[type="number"],
+input[type="text"],
+select,
+textarea {
+  display: block;
   width: 100%;
-}
-
-h1 {
-  margin-bottom: 25px;
-  font-size: 1.8rem;
-  color: #333;
-}
-
-input[type="number"] {
-  width: 80%;
-  padding: 10px 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border 0.3s, box-shadow 0.3s;
-}
-
-input[type="number"]:focus {
-  border-color: #4f5153;
-  box-shadow: 0 0 8px rgba(142, 144, 147, 0.5);
-  outline: none;
+  max-width: 100%;
+  box-sizing: border-box; /* include padding/border in width */
+  padding: 8px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font: inherit;
 }
 
 button {
-  padding: 10px 25px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 8px;
-  background: #2575fc;
-  color: white;
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background 0.3s, transform 0.2s;
 }
 
-button:hover {
-  background: #979a9f;
-  transform: scale(1.05);
+.actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 12px;
 }
 
-p.result {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  color: #333;
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid #000;
+  outline-offset: 1px;
 }
+
+h1 { margin: 0 0 12px; text-align: center; }

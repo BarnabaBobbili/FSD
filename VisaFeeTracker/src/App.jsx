@@ -93,7 +93,7 @@ export default function App() {
           <input
             value={form.name}
             onChange={(e) => setForm({ ...form, name: e.target.value })}
-            placeholder="e.g. John Doe"
+            placeholder="e.g. Sunless"
           />
         </div>
 

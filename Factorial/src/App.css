@@ -1,65 +1,84 @@
+/* css */
+:root { font-family: system-ui, Arial, sans-serif; }
+
+html, body, #root { height: 100%; min-height: 100vh; }
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
 body {
   margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f4f4f9; /* soft light gray */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background: #fff;
+  color: #000;
+  display: grid;
+  place-items: center;   /* center horizontally and vertically */
+  padding: 16px;         /* breathing room */
 }
 
 .container {
-  background: #ffffff;
-  padding: 40px 30px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
+  width: min(560px, 100% - 32px); /* app box width */
+  margin: 0;                      /* centered by body's grid */
+  padding: 16px;
+  border: 1px solid #000;         /* enclosed in a box */
+  background: #fff;
 }
 
-h1 {
-  margin-bottom: 25px;
-  font-size: 1.8rem;
-  color: #333333;
+h1 { text-align: center; margin: 0 0 12px; }
+
+/* sections */
+.card {
+  border: 1px solid #000;
+  background: #fff;
+  padding: 16px;
+  margin-bottom: 16px;
 }
 
-input[type="number"] {
-  width: 80%;
-  padding: 10px 15px;
+/* form layout */
+.row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px;
+  align-items: center;
   margin: 10px 0;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  transition: border 0.3s, box-shadow 0.3s;
 }
 
-input[type="number"]:focus {
-  border-color: #888;
-  box-shadow: 0 0 6px rgba(136, 136, 136, 0.3);
-  outline: none;
+label { font-weight: 600; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid #000;
+  outline-offset: 1px;
+}
+
+/* actions */
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 button {
-  padding: 10px 25px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 6px;
-  background: #4a90e2; /* calm blue */
-  color: white;
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
   cursor: pointer;
-  margin-top: 15px;
-  transition: background 0.3s, transform 0.2s;
 }
 
-button:hover {
-  background: #357ab8;
-  transform: scale(1.05);
-}
+/* misc */
+.total { margin-top: 8px; font-weight: 700; }
 
-p.result {
-  margin-top: 20px;
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: #333;
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
 }

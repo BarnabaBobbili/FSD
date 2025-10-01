@@ -137,10 +137,8 @@ export default function App() {
             <div><strong>Vendor:</strong> {result.vendor || "—"}</div>
             <div><strong>Item Name:</strong> {result.item || "—"}</div>
             <div><strong>Date:</strong> {result.date || "—"}</div>
-            <div><strong>Quantity × Cost:</strong> {result.qty} × {fmtINR(result.cost)}</div>
             <div><strong>Total (before discount):</strong> {fmtINR(result.total)}</div>
             <div><strong>Category:</strong> {result.category}</div>
-            <div><strong>How categorized:</strong> {result.categoryNote}</div>
             <div><strong>Discount:</strong> {result.discountPct}% (−{fmtINR(result.discountAmt)})</div>
             <div className="total"><strong>Final Amount:</strong> {fmtINR(result.final)}</div>
             <div><strong>Unit digit (₹) after discount:</strong> {result.unitDigit}</div>
