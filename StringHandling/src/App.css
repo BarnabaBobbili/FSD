@@ -1,0 +1,80 @@
+/* css */
+:root { font-family: system-ui, Arial, sans-serif; }
+
+html, body, #root { min-height: 100dvh; }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #000;
+}
+
+.container {
+  width: 100%;
+  margin: 0;
+  padding: 16px 20px; /* page padding */
+  border: none;
+  background: transparent; /* no box */
+}
+
+h1 { margin: 0 0 16px; }
+
+.card {
+  border: none;            /* no box */
+  background: transparent; /* no box */
+  padding: 0;
+  margin-bottom: 20px;     /* spacing between sections */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid #000;
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.list {
+  margin: 8px 0 12px;
+  padding-left: 18px;
+}
+
+.total { margin-top: 8px; font-weight: 600; }
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
+}
