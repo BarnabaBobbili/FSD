@@ -1,0 +1,111 @@
+/* css */
+:root { font-family: system-ui, Arial, sans-serif; }
+
+html, body, #root { min-height: 100vh; }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #000;
+}
+
+/* widen page container */
+.container {
+  width: min(1040px, 50% - 32px);
+  margin: 16px auto;
+  padding: 16px;
+}
+
+h1 { margin: 0 0 16px; }
+
+/* give more space to inputs */
+.row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+label { font-weight: 600; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid #000;
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.total { margin-top: 8px; font-weight: 700; }
+
+/* Remove bullets in output list */
+.list {
+  list-style: none;
+  padding-left: 0;
+  margin: 8px 0 12px;
+}
+.list li + li { margin-top: 6px; }
+
+/* widen subject row columns */
+.subGrid {
+  display: grid;
+  grid-template-columns: minmax(380px, 1fr) 120px 120px 120px 200px;
+  gap: 8px;
+  align-items: center;
+}
+
+.subGrid input { width: 100%; }
+
+/* prevent grade text from shrinking other columns */
+.gradeCell {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 800px) {
+  .subGrid {
+    grid-template-columns: 1fr 120px 120px;
+  }
+  .subGrid > :nth-child(4) { grid-column: 2 / 3; } /* Out of beside Marks */
+  .subGrid > :nth-child(5) { grid-column: 1 / -1; } /* Grade on its own line */
+}
+
+@media (max-width: 700px) {
+  .subGrid {
+    grid-template-columns: 1fr 120px 120px;
+  }
+  .subGrid > :nth-child(4) { grid-column: 2 / 3; } /* Out of beside Marks */
+  .subGrid > :nth-child(5) { grid-column: 1 / -1; } /* Grade on its own line */
+}
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
+}
