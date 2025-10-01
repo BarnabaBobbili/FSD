@@ -1,0 +1,105 @@
+/* css */
+:root { font-family: system-ui, Segoe UI, Arial; }
+
+html, body, #root { height: 100%; min-height: 100dvh; }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #e5e6eb;
+  display: grid;
+  place-items: center;
+  color: #e5e7eb;
+}
+
+.container {
+  background: #5f5f80;
+  width: min(720px, 100% - 32px);
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 16px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+h1 { margin: 0 0 16px; font-size: 1.4rem; }
+
+.card {
+  background: #191c28;
+  border: 1px solid #2a3142;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+label { color: #cbd5e1; font-size: .95rem; }
+
+input, select {
+  padding: 10px 12px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #0f172a;
+  color: #e5e7eb;
+  outline: none;
+  transition: border-color .15s, box-shadow .15s, background .15s;
+  width: min(100%, 260px); /* reduce width */
+}
+
+
+input::placeholder { color: #94a3b8; }
+
+input:focus, select:focus {
+  border-color: #60a5fa;
+  box-shadow: 0 0 0 3px rgba(96,165,250,.25);
+  background: #0b1428;
+}
+
+.actions { display: flex; gap: 10px; margin-top: 12px; }
+
+button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #2563eb;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform .05s ease, filter .15s ease, background .15s;
+}
+
+button:hover { filter: brightness(1.05); }
+button:active { transform: translateY(1px); }
+
+button.secondary {
+  background: transparent;
+  border-color: #3b455a;
+  color: #e5e7eb;
+}
+
+.list {
+  margin: 8px 0 12px;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  max-height: 40vh;
+  overflow: auto;
+}
+
+.total { margin-top: 8px; font-size: 1.1rem; font-weight: 700; }
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
+  .row input,
+  .row select { width: 100%; } /* full width on small screens */
+}
