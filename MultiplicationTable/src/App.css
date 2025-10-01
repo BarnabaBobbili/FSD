@@ -1,0 +1,93 @@
+/* css */
+:root { font-family: system-ui, Arial, sans-serif; }
+
+html, body, #root { min-height: 100vh; }
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #000;
+}
+
+.container {
+  width: min(720px, 100% - 32px);
+  margin: 16px auto;   /* centered horizontally */
+  padding: 0;          /* no box feel */
+  background: transparent;
+}
+
+h1 { margin: 0 0 16px; }
+
+.card {
+  border: none;        /* no boxes around sections */
+  background: transparent;
+  padding: 0;
+  margin-bottom: 16px; /* spacing between sections */
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0;
+}
+
+label { font-weight: 600; }
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  font: inherit;
+}
+
+textarea { resize: vertical; }
+
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: 2px solid #000;
+  outline-offset: 1px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+button {
+  padding: 8px 12px;
+  border: 1px solid #000;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+}
+
+.list {
+  margin: 8px 0 12px;
+  padding-left: 18px;
+}
+
+.total { margin-top: 8px; font-weight: 700; }
+
+@media (max-width: 560px) {
+  .row { grid-template-columns: 1fr; }
+}
+
+.tableGrid {
+  display: flex;
+  flex-wrap: wrap;   /* place columns beside; wrap if needed */
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.tableGrid .list {
+  margin: 0;         /* tighten spacing between columns */
+  min-width: 160px;  /* column width */
+}
