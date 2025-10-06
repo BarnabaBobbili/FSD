@@ -157,3 +157,73 @@ a:focus-visible, .btn:focus-visible{
   thead th, tbody td{ padding: 10px 12px; }
   .btn{ padding: 7px 12px; }
 }
+
+
+
+/* Rainbow RGB Highlight Effect */
+@keyframes rainbow-spin {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.highlight-row {
+  position: relative;
+  background: linear-gradient(
+    90deg,
+    #ff0000,
+    #ff7f00,
+    #ffff00,
+    #00ff00,
+    #0000ff,
+    #4b0082,
+    #9400d3,
+    #ff0000,
+    #ff7f00,
+    #ffff00
+  );
+  background-size: 200% 100%;
+  animation: rainbow-spin 1s linear infinite;
+}
+
+.highlight-row td {
+  position: relative;
+  padding: 15px 14px;
+  border: 1.5px solid transparent;
+  background: transparent;
+  background-clip: padding-box;
+}
+
+.highlight-row td::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  z-index: 0;
+  transition: background 0.2s ease;
+}
+
+.highlight-row td > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+.highlight-row:hover td::before {
+  background: #fafafa;
+}
+
+/* Add padding effect to show the rainbow border */
+.highlight-row td {
+  border: 1.5px solid transparent;
+  background-clip: padding-box;
+}
+
+.highlight-row td:first-child {
+  border-left: 1.5px solid transparent;
+}
+
+.highlight-row td:last-child {
+  border-right: 1.5px solid transparent;
+}
+
